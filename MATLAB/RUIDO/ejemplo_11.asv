@@ -1,8 +1,0 @@
-t = 0:0.001; 10;
-x = square(t);
-
-% Crear un objeto canal que sigue un modelo de Rayleigh
-%frec. de muestreo: 1KHz, Máximo desplazamiento Doppler: 20Hz
-c = rayleighchan(1/1000, 20);
-
-% ver las propies

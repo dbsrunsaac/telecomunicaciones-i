@@ -1,5 +1,5 @@
 clc, clear, close all;
-
+t = 0: 0.001 : 1;
 g = sin(2*pi*2*t);
 g_ruido = awgn(g,20);      % añadir ruido, SNR = 20 dB
 
@@ -14,6 +14,6 @@ subplot(313)
 plot(t, g_ruido);
 
 % Representar las densidades espectrales de potencia
-psd(g)
+pwelch(g)
 hold on
-psd(g_ruido)
+pwelch(g_ruido)
