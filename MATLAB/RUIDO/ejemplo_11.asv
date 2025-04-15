@@ -9,9 +9,7 @@ rayleigh = comm.RayleighChannel( ...
     'MaximumDopplerShift', 20);
 figure;
 plot(t, x);
-title('Señal cuadrada de entrada');
-xlabel('Tiempo [s]');
-ylabel('Amplitud');
+title('Señal cuadrada de entere
 % Pasar la señal por el canal
 y = rayleigh(x);
 
