@@ -11,3 +11,4 @@ pause
 freqresp(lt1,1)          % respuesta en frecuencia = 1 rad.
 pause
 bode(lt1)
+    
