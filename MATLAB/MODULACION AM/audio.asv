@@ -12,4 +12,4 @@
 % % Recuperar el archivo en matlab
 % 
 [y, Fs] = audioread('grabacion.wav');
-sound(y, Fs);
+recObj = audiorecorder;
