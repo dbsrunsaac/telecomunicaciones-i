@@ -407,13 +407,114 @@
 	
 	\subsection{Calculo de la potencia total de la señal s(t)}
 	
-	Para el calculo de la potencia solo basta con elevar al cuadrada la amplitud de cada componente sinusoidal y dividirlo entre 2, el resultado de la operación \ref{label}
+	Para el calculo de la potencia solo basta con elevar al cuadrada la amplitud de cada componente sinusoidal y dividirlo entre 2, el resultado de la operación \ref{eq:potencia-total-propuesto-1}
 	
 	\begin{align}
 		P &= \frac{10^2}{2} + \frac{4^2}{2} + \frac{4^2}{2}\\
-		P &= 66 [w]
+		P &= 66 [w] \\
+		\label{eq:potencia-total-propuesto-1}
 	\end{align}
 	
+	\subsection{Sistema AM en matlab}
+	Para realizar la grabación de voz mediante Matlab y luego  proceder con el procesamiento de la misma, se puede hacer de la herramienta \textbf{audiorecorder} el cual permite manipular señales físicas mediante un objeto con el cual se controlan los parámetros de la grabación como la frecuencia de muestreo y la duración de la grabación.
+	
+	Esta función definida en el bloque de código de forma simple permite la grabación, reproducción y grabado del audio en un formato de archivo .wav, el cual puede ser manipulado en otra área de trabajo.
+	
+	\begin{lstlisting}[caption={Manipulación de audio con audiorecorder}, label={lst:grabacion-audio}]
+		recObj = audiorecorder;
+		recordblocking(recObj, 5);
+		play(recObj);
+		
+		y = getaudiodata(recObj); 
+		plot(y);
+		
+		Fs = 8000;
+		audiowrite('grabacion.wav', y, Fs);
+		
+		
+		% Recuperar el archivo en matlab
+		
+		[y, Fs] = audioread('grabacion.wav');
+		sound(y, Fs);
+		
+	\end{lstlisting}
+	
+	Para este caso el audio generado tiene una duración de 5 segundos con un total de 40000 muestras para la frecuencia de muestreo de 8000, además esta misma se puede procesar mediante la función \textbf{audioread} con la finalidad de esta experiencia su modulación AM.
+	
+	La modulación de esta señal se muestra en la siguiente ventana de código en la cual se cambio la frecuencia de muestreo a una adecuada para la señal y se hizo uso de la misma portadora para su traslado en frecuencia.
+	
+	\begin{lstlisting}[caption={Modulaciòn de la señal de audio}, numbers=none]
+		%% Parametros de la simulacion
+		Fs = 8000;         % Frecuencia de muestreo (Hz)
+		t = 0 : 1/Fs : 1;  % Vector de tiempo (1 segundo)
+		
+		% Parametros de la senal portadora
+		fc = 1000;          % Frecuencia de la portadora (Hz)
+		Ac = 1;             % Amplitud de la portadora
+		
+		% Parametros de la senal moduladora
+		fm = 100;           % Frecuencia de la moduladora (Hz)
+		Am = 0.5;           % Amplitud de la moduladora
+		ka = 2;           
+		
+		%% Generacion de senales
+		% senal portadora
+		portadora = Ac * cos(2*pi*fc*t);
+		
+		% senal moduladora (coseno)
+		[y, Fs] = audioread('grabacion.wav');
+		sound(y, Fs);
+		moduladora = y(8000:16000);
+		
+		% senal modulada AM
+		modulada = Ac * (1 + ka*moduladora) .* cos(2*pi*fc*t);
+	\end{lstlisting}
+	
+	Donde grabacion.wav es el archivo de audio generado.
+	
+	\subsection{Espectro de potencia de la señal modulada}
+	
+	Como resultado de la modulación se puede apreciar que los componentes principales de esta señal se encuentran entre los 120 a 200 Hz y el resultado de su modulación y respuesta en el tiempo y frecuencia se puede apreciar en la figuras \ref{fig:modulacion-audio-tiempo}  y \ref{fig:modulacion-audio-frecuencia} respectivamente las cuales muestran gráficamente este proceso.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{media/modulacion-audio-tiempo}
+		\caption{Respuesta de la modulación AM en el tiempo de la señal de audio}
+		\label{fig:modulacion-audio-tiempo}
+	\end{figure}
+	
+	En la señal de frecuencia debido a los diferentes componentes sinusoidales que componen tal señal es más elaborado crear un análisis matemático para representar toda sus componentes en frecuencia.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{media/modulacion-audio-frecuencia}
+		\caption{Respuesta en frecuencia de la modulación AM de la señal de audio}
+		\label{fig:modulacion-audio-frecuencia}
+	\end{figure}
+	
+	
+	
+	\subsection{Demodulación  AM}
+	Para realizar la demodulación de la señal se considerara un método basado en la DSBSC la cual consiste en volver a multiplicar la señal modulada por la misma portadora y luego aplicar un filtro pasa bajo para solamente recuperar las componentes en frecuencia de banda base con la cual se genero la señal.
+	
+	Además cabe resaltar que este proceso a nivel de simulación brinda una respuesta cercana y/o muy fiable de la información modulada, sin embargo este proceso en una implementación física es difícil de conseguir una alta fidelidad debido a las dificultes de conseguir 2 osciladores con las mismas características, optando por demodulación asincrona basada en los detectores de envolvente.
+	
+	Finalmente en las figuras \ref{fig:senial-modulada} y \ref{fig:senial-demodulada} se tienen el proceso de modulación a la señal de audio y demodulación luego del filtro respectivamente.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{media/senial-modulada}
+		\caption{Señal de Audio modulada}
+		\label{fig:senial-modulada}
+	\end{figure}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{media/senial-demodulada}
+		\caption{Señal de Audio demodulada}
+		\label{fig:senial-demodulada}
+	\end{figure}
+		
 	\section{Conclusiones}
 	
 	\begin{itemize}
