@@ -1,0 +1,105 @@
+%% Parámetros de la simulación
+fs = 10000;         % Frecuencia de muestreo (Hz)
+t = 0:1/fs:1-1/fs;  % Vector de tiempo (1 segundo)
+
+% Parámetros de la señal portadora
+fc = 1000;          % Frecuencia de la portadora (Hz)
+Ac = 1;             % Amplitud de la portadora
+
+% Parámetros de la señal moduladora
+fm = 100;           % Frecuencia de la moduladora (Hz)
+Am = 0.5;           % Amplitud de la moduladora
+ka = 2;           % Índice de modulación (debe ser <= 1 para evitar sobremodulación)
+
+%% Generación de señales
+% Señal portadora
+portadora = Ac * cos(2*pi*fc*t);
+
+% Señal moduladora (coseno)
+moduladora = Am * cos(2*pi*fm*t);
+
+% Señal modulada AM
+modulada = Ac * (1 + ka*moduladora) .* cos(2*pi*fc*t);
+
+%% Cálculo de espectros
+N = length(t);      % Número de muestras
+f = (-fs/2:fs/N:fs/2-fs/N); % Vector de frecuencia
+
+% Espectro de la moduladora
+MODULADORA = fftshift(fft(moduladora)/N);
+
+% Espectro de la portadora
+PORTADORA = fftshift(fft(portadora)/N);
+
+% Espectro de la señal modulada
+MODULADA = fftshift(fft(modulada)/N);
+
+%% Gráficas en el dominio del tiempo
+figure;
+
+% Señal moduladora
+subplot(3,1,1);
+plot(t, moduladora, 'b');
+title('Señal Moduladora (Dominio del Tiempo)');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+xlim([0 0.05]); % Mostrar solo 50 ms para mejor visualización
+grid on;
+
+% Señal portadora
+subplot(3,1,2);
+plot(t, portadora, 'r');
+title('Señal Portadora (Dominio del Tiempo)');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+xlim([0 0.005]); % Mostrar solo 5 ms para mejor visualización
+grid on;
+
+% Señal modulada AM
+subplot(3,1,3);
+plot(t, modulada, 'm');
+title('Señal Modulada AM (Dominio del Tiempo)');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+xlim([0 0.05]); % Mostrar solo 50 ms para mejor visualización
+grid on;
+
+%% Gráficas en el dominio de la frecuencia
+figure;
+
+% Espectro de la señal moduladora
+subplot(3,1,1);
+stem(f, abs(MODULADORA), 'b', 'Marker', 'o');
+title('Espectro de la Señal Moduladora');
+xlabel('Frecuencia (Hz)');
+ylabel('Magnitud');
+xlim([-200 200]); % Enfoque en las frecuencias relevantes
+grid on;
+
+% Espectro de la señal portadora
+subplot(3,1,2);
+stem(f, abs(PORTADORA), 'r', 'Marker', 'o');
+title('Espectro de la Señal Portadora');
+xlabel('Frecuencia (Hz)');
+ylabel('Magnitud');
+xlim([-1200 1200]); % Enfoque en las frecuencias relevantes
+grid on;
+
+% Espectro de la señal modulada AM con marcadores de ancho de banda
+subplot(3,1,3);
+stem(f, abs(MODULADA), 'm', 'Marker', 'o');
+title(['Espectro de la Señal Modulada AM (Ancho de Banda = ', num2str(2*fm), ' Hz)']);
+xlabel('Frecuencia (Hz)');
+ylabel('Magnitud');
+xlim([-1200 1200]); % Enfoque en las frecuencias relevantes
+grid on;
+
+% Marcadores para el ancho de banda
+hold on;
+plot([fc+fm fc+fm], [0 max(abs(MODULADA))], 'k--', 'LineWidth', 1.5);
+plot([fc-fm fc-fm], [0 max(abs(MODULADA))], 'k--', 'LineWidth', 1.5);
+plot([-fc-fm -fc-fm], [0 max(abs(MODULADA))], 'k--', 'LineWidth', 1.5);
+plot([-fc+fm -fc+fm], [0 max(abs(MODULADA))], 'k--', 'LineWidth', 1.5);
+hold off;
+
+legend('Espectro AM', 'Límites de banda');
