@@ -380,6 +380,39 @@
 	Se requiere una modulación con las siguientes características $A_c = 10V; f_c = 1MHz; m(t) = 2\cos(2\pi5*10^3t); k_a = 0.4;$ y con las cuales se desea realizar una modulación AM.
 	\subsection{\textbf{Expresión completa de s(t)}}
 	
+	Para la obtención de la señal modulada es necesario realizar el producto entre la señal moduladora y portadora, siendo el resultado de esta la que nos brindará la expresión completa de s(t), definiendo la portadora, se tiene:
+	
+	\begin{equation}
+		m(t) = 2\cos(2\pi5*10^3t)
+		\label{eq:moduladora}	
+	\end{equation}
+	
+	\begin{equation}
+		A_cCos(2\pi10^6t)
+		\label{eq:portadora}
+	\end{equation}
+	
+	Siendo la formula general para la obtención de la señal modulada la que se expresa en \ref{eq:moduladora-general} la cual hace uso directamente del indice de modulación y del producto entre la moduladora y la portadora.
+	
+	\begin{equation}
+		s(t) = Ac(1 + K_am(t))cos(2\pi f_ct)
+		\label{eq:moduladora-general}
+	\end{equation}
+	
+	Luego de aplicar esta relación el resultado obtenido muestra la señal moduladora desplazada en frecuencia una cantidad equivalente al de la portadora obtenido la relación \ref{eq:} perteneciente a s(t).
+	
+	\begin{equation}
+		s(t) = 10cos(2\pi10^6t) + 4cos(2\pi10^6 + 2\pi5*10^3)t + 4cos(2\pi10^6 - 2\pi5*10^3)t
+	\end{equation}
+	
+	\subsection{Calculo de la potencia total de la señal s(t)}
+	
+	Para el calculo de la potencia solo basta con elevar al cuadrada la amplitud de cada componente sinusoidal y dividirlo entre 2, el resultado de la operación \ref{label}
+	
+	\begin{align}
+		P &= \frac{10^2}{2} + \frac{4^2}{2} + \frac{4^2}{2}\\
+		P &= 66 [w]
+	\end{align}
 	
 	\section{Conclusiones}
 	
