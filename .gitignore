@@ -1,0 +1,11 @@
+# Se ignoran los siguientes archivos
+
+# Latex
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+
+
