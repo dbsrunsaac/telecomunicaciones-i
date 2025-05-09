@@ -71,6 +71,7 @@ title('Espectro DSB-SC (Ancho de Banda = 2f_m)');
 xlabel('Frecuencia (Hz)'); ylabel('Magnitud');
 xlim([-1.5*fc 1.5*fc]); grid on;
 hold on;
+
 plot([fc+fm fc+fm], [0 max(DSB_SC)], 'k--');
 plot([fc-fm fc-fm], [0 max(DSB_SC)], 'k--');
 plot([-fc-fm -fc-fm], [0 max(DSB_SC)], 'k--');
