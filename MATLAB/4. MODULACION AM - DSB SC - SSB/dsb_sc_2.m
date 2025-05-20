@@ -22,6 +22,9 @@ c = Ac*cos(2*pi*fc*t);
 % DSB-SC
 dsb_sc = m .* c;
 
+demodulacion = dsb_sc.*c;
+demo_frecuencia = abs(fftshift(fft(demodulacion)/N));
+
 % SSB (Metodo de filtrado)
 filtro_pb = fir1(100, 1100/(fs/2), 'high');  % Filtro pasa bajos
 hilbert_m = imag(hilbert(m));   % Transformada de Hilbert
@@ -87,3 +90,8 @@ hold on;
 stem([fc-fm fc-fm], [0 max(SSB_LSB)], 'k--');
 stem([-fc+fm -fc+fm], [0 max(SSB_LSB)], 'k--');
 hold off;
+
+figure;
+plot(t, demodulacion); 
+figure;
+plot(f, demo_frecuencia);
