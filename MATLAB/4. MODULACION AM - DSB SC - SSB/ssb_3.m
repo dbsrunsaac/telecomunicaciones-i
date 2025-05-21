@@ -10,10 +10,10 @@ fc = 1000000;                   % Frecuencia portadora
 Ac = 1;                      % Amplitud portadora
 
 % Moduladora (mensaje)
-fm = 1000;                    % Frecuencia mensaje
-Am = 2;                      % Amplitud mensaje
+fm = 2000;                    % Frecuencia mensaje
+Am = 3;                      % Amplitud mensaje
 % m = Am*cos(2*pi*fm*t);       % Senal moduladora
-m = Am*(cos(2*pi*fm*t) + (1/2)*cos(2*pi*3*fm*t) );       % Senal moduladora
+m = Am*cos(2*pi*fm*t) - 2*sin(2*pi*2*fm*t);       % Senal moduladora
 
 %% GENERACION DE SENALES
 % Portadora
@@ -25,7 +25,7 @@ dsb_sc = m .* c;
 % SSB (Metodo de filtrado)
 filtro_pb = fir1(100, 1100/(fs/2), 'high');  % Filtro pasa bajos
 hilbert_m = imag(hilbert(m));   % Transformada de Hilbert
-ssb_usb = (m.*cos(2*pi*fc*t) + (hilbert_m.*sin(2*pi*fc*t)));
+ssb_usb = (m.*cos(2*pi*fc*t) - (hilbert_m.*sin(2*pi*fc*t)));
 ssb_usb = filter(filtro_pb, 1, ssb_usb); % Filtrado final
 
 %% VISUALIZACION TIEMPO
