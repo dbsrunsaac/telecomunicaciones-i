@@ -7,7 +7,7 @@
 # GNU Radio Python Flow Graph
 # Title: Not titled yet
 # Author: Bremdows
-# GNU Radio version: 3.10.9.2
+# GNU Radio version: 3.10.10.0
 
 from PyQt5 import Qt
 from gnuradio import qtgui
@@ -84,7 +84,7 @@ class demodulador_dsb_lc_v3(gr.top_block, Qt.QWidget):
             args="numchan=" + str(1) + " " + ""
         )
         self.rtlsdr_source_0.set_time_unknown_pps(osmosdr.time_spec_t())
-        self.rtlsdr_source_0.set_sample_rate(samp_rate)
+        self.rtlsdr_source_0.set_sample_rate(200e3)
         self.rtlsdr_source_0.set_center_freq(freq_portadora, 0)
         self.rtlsdr_source_0.set_freq_corr(0, 0)
         self.rtlsdr_source_0.set_dc_offset_mode(0, 0)
@@ -238,7 +238,6 @@ class demodulador_dsb_lc_v3(gr.top_block, Qt.QWidget):
         self.low_pass_filter_0.set_taps(firdes.low_pass(1, self.samp_rate, 5000, 100, window.WIN_HAMMING, 6.76))
         self.qtgui_freq_sink_x_0.set_frequency_range(self.freq_portadora, self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
-        self.rtlsdr_source_0.set_sample_rate(self.samp_rate)
 
     def get_freq_portadora(self):
         return self.freq_portadora
