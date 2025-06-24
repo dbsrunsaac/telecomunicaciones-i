@@ -107,7 +107,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 420.0]
+    coordinate: [272, 356.0]
     rotation: 0
     state: enabled
 - name: audio_sink_0
@@ -140,7 +140,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 216.0]
+    coordinate: [504, 216.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_xx_0
@@ -158,7 +158,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1184, 320.0]
+    coordinate: [1176, 308.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_xx_0
@@ -176,7 +176,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [744, 312.0]
+    coordinate: [736, 296.0]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -200,7 +200,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 264.0]
+    coordinate: [920, 260.0]
     rotation: 0
     state: enabled
 - name: qtgui_freq_sink_x_0
@@ -281,7 +281,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1472, 412.0]
+    coordinate: [1472, 404.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -720,7 +720,7 @@ blocks:
     minoutbuf: '0'
     nchan: '1'
     num_mboards: '1'
-    sample_rate: samp_rate
+    sample_rate: 200e3
     sync: sync
     time_source0: ''
     time_source1: ''
@@ -735,7 +735,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 172.0]
+    coordinate: [208, 132.0]
     rotation: 0
     state: enabled
 
@@ -751,4 +751,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.9.2
+  grc_version: 3.10.10.0
