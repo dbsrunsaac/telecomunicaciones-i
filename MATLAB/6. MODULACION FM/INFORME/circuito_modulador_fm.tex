@@ -1,0 +1,182 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{subfig}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{academicons}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tabularx} % Asegúrate de incluir este paquete
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Color Enlace
+\definecolor{colorEnlace}{RGB}{0, 0, 0}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=colorEnlace,
+	citecolor=colorEnlace,
+	urlcolor=colorEnlace,
+	pdfauthor={Davis Bremdow Salazar Roa},
+	pdftitle={Sistemas Embebidos}
+}
+\definecolor{mybg}{rgb}{0.97,0.97,0.97}
+\definecolor{mygray}{gray}{0.4}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{myblue}{rgb}{0,0,0.8}
+\definecolor{mypurple}{rgb}{0.58,0,0.82}
+\definecolor{myred}{rgb}{0.7,0,0}
+
+\lstdefinelanguage{MatlabEnhanced}{
+	language=Matlab,
+	morekeywords={[2]linspace,plot,title,xlabel,ylabel,legend,grid},
+	morekeywords={[3]sin,cos,exp,log,sqrt},
+	keywordstyle=\color{myblue}\bfseries,
+	keywordstyle=[2]\color{mypurple},
+	keywordstyle=[3]\color{myred},
+	commentstyle=\color{mygreen}\itshape,
+	stringstyle=\color{mygray},
+	morecomment=[l]%
+}
+
+\lstset{
+	language=MatlabEnhanced,
+	backgroundcolor=\color{mybg},
+	frame=single,
+	basicstyle=\ttfamily\small,
+	showstringspaces=false,
+	numbers=none,              %
+	xleftmargin=0pt,           %
+	framexleftmargin=0pt,      
+	framexrightmargin=0pt,
+	framextopmargin=2pt,
+	framexbottommargin=2pt,
+	breaklines=true,
+	tabsize=1,
+}
+
+% Control 
+\usepackage{amsmath}
+\begin{document}
+	
+	\title{Modulación FM - Análisis de una señal de voz}
+	\author{
+		\makebox[\textwidth][c]{\large\textbf{Universidad Nacional de San Antonio Abad del Cusco}}\\
+		\makebox[\textwidth][c]{\normalsize\textit{Escuela profesional de Ingeniería Electrónica}}\\
+		\makebox[\textwidth][c]{\normalsize\textit{Laboratorio de Circuitos Electrónicos III}}\\
+		\and
+		\IEEEauthorblockN{Ing. Milton Velasquez Curo}
+		\IEEEauthorblockA{Ingeniero Electrónico \\
+			Cusco, Perú \\
+			milton.velasquez@unsaac.edu.pe}
+		\and
+		\IEEEauthorblockN{Ruth Juana Espino Puma - 185746}
+		\IEEEauthorblockA{Estudiante de Ingeniería Electrónica \\
+			Cusco, Perú \\
+			184657@unsaac.edu.pe}
+		\and
+		\IEEEauthorblockN{Davis Bremdow Salazar Roa - 200353}
+		\IEEEauthorblockA{Estudiante de Ingeniería Electrónica \\
+			Cusco, Perú \\
+			200353@unsaac.edu.pe}
+	}
+	
+	\maketitle
+	\begin{abstract}
+		La modulación es un proceso fundamental en las telecomunicaciones que consiste en variar una o más propiedades de una señal portadora (como amplitud, frecuencia o fase) en función de una señal de información o mensaje. Este proceso permite transmitir información a largas distancias de manera eficiente, minimizando interferencias y aprovechando mejor el espectro de frecuencias. Existen varios tipos de modulación, entre ellos la modulación en amplitud (AM), frecuencia (FM) y fase (PM), cada una con características y usos específicos según las necesidades del sistema de comunicación.
+		
+	\end{abstract}
+	
+	\begin{IEEEkeywords}
+		Modulación, portadora, señal, índice de modulación, amplitud, frecuencia, fase, transmisión, espectro, distorsión.
+	\end{IEEEkeywords}
+	
+	%% Contenido del documento
+	\section{Circuito Modulador FM}
+	
+	Una forma de poder implementar físicamente un modulador FM es mediante el empleo de circuito electrónicos, siendo uno de estos el circuito integrado XR2206 el cual es un generador de señales (sinusoidales, cuadradas y triangulares) según la configuración entre sus pines y las salidas a usar, un esquema genera sobre este integrado se puede obtener en su hoja de datos en la cual se detallan ejemplos y especificaciones sobre su funcionamiento.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/integrado-xr2206}
+		\caption{CI - Generador de señales XR2206}
+		\label{fig:integrado-xr2206}
+	\end{figure}
+	
+	En la figura \ref{fig:integrado-xr2206} se puede apreciar un esquema gráfico con una configuración inicial elegida para su funcionamiento como oscilador o generador de señales.
+	
+	Sin embargo si se desea tener un mayor control de la frecuencia de la señal generada el diagrama general del CI en la figura \ref{fig:diagrama-bloques-xr2206} muestra la configuración de pines, siendo los de relevancia los pines 5 y 6 (conexión para el capacitor) y 7 y 8 (pines para la resistencia) los cuales definen la frecuencia de oscilación del circuito bajo la ecuación que se define en \ref{eq:frecuencia-oscilacion} y utilizando el resto de pines para la polarización y salidas.
+	
+	\begin{equation}
+		\omega_o = \frac{1}{CR}
+		\label{eq:frecuencia-oscilacion}
+	\end{equation}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/diagrama-bloques-xr2206}
+		\caption{Diagrama de bloques del CI XR2206}
+		\label{fig:diagrama-bloques-xr2206}
+	\end{figure}
+	
+	Una vez definida los parámetros para el funcionamiento del CI, es posible tener un ejemplo sobre el funcionamiento del mismo mediante NI Multisim y en el cual este circuito se configurara de forma que sirva como un modulador FM y mediante el empleo de una señal moduladora generada por el generador de funciones.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/simulacion-xr2206}
+		\caption{Circuito Modulador FM - NI Multisim}
+		\label{fig:simulacion-xr2206}
+	\end{figure}
+	
+	Un ejemplo de esta implementación se puede apreciar en la figura \ref{fig:simulacion-xr2206} en la cual se puede apreciar los componentes antes mencionados para una frecuencia de la portadora de 1K Hz el cual responde a la inversa del producto de la capacitancia y resistencia según \ref{eq:frecuencia-oscilacion}.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	\bibliographystyle{IEEEtran}
+	\bibliography{biblio}
+\end{document}

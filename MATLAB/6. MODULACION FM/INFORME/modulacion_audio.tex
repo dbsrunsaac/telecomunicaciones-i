@@ -119,8 +119,8 @@
 	
 	Para este propósito se hizo uso del código mostrado en el listing \ref{lst:modulacion-fm} define una modulación mediante el empleo de la función $cumsum()$ la cual se encarga de integrar la señal moduladora.
 	
-	\begin{lstlisting}[numbers=none, caption="", label=lst:modulacion-fm]
-		%% Parámetros de la senal de informacion
+	\begin{lstlisting}[numbers=none, caption="Modulacion FM de una señal de Audio", label=lst:modulacion-fm]
+		%% Parametros de la senal de informacion
 		fm = 15;
 		a = 2;
 		
@@ -134,13 +134,13 @@
 		
 		ft = a*sin(2*pi*fm*t);
 		
-		%% Modulación AM
+		%% Modulacion AM
 		fi = A*cos(2*pi*fc*t + 2*pi*cumsum(ft)*Ts);
 	\end{lstlisting}
 	
 	El agregado para este procedimiento se realiza mediante la definición de una variable que se encarga de recuperar la información de un archivo .wav en la cual se tiene registrado un audio de 2 segundos, en el listing \ref{lst:audio-matlab} se define estas líneas de código.
 	
-	\begin{lstlisting}[caption={Recuperación del archivo del audio}, numbers=none, label=lst:audio-matlab]
+	\begin{lstlisting}[caption={Lectura del archivo del audio}, numbers=none, label=lst:audio-matlab]
 		y = audioread("audio.wav");
 	\end{lstlisting}
 	
@@ -165,9 +165,54 @@
 		\item $f_3 = 858 [Hz]$
 	\end{itemize}
 	
-	Siendo necesario el empleo de una portadora superior a la máxima frecuencia resultante para evitar comportamientos inesperados durante este proceso.
+	Siendo necesario el empleo de una portadora superior a la máxima frecuencia obtenida para evitar comportamientos inesperados durante este proceso, considerando además que el proceso de modulación requiere del traslado de la señal en banda base a una mayor representación en frecuencia.
 	
-	\section{  }
+	\section{ Demodulación FM }
+	
+	Existen diferentes formas de poder recuperar la señal de información en una señal FM, sin embargo como se define en \cite{stremler2006} cada uno de estos métodos deben cumplir con una característica esencial que relaciona la amplitud de la señal de salida de lineal con la frecuencia instantánea de la señal de entrada.
+	
+	Siendo así que uno de estos métodos (directo), relaciona de forma lineal el voltaje en frecuencia, dandole el nombre de discriminador de frecuencias el cual consiste a grandes rasgos el empleo de un derivador para convertir la señal FM a una parecida a la FM y posterior a ello utilizar un detector de envolvente para recuperar la señal que ahora se encuentra en la amplitud de la señal.	
+	
+	\begin{equation}
+		\frac{d \phi}{dt} = A \left[ \omega_c + k_f f(t) \right] sin \left( \omega_c t + \int_{0}^{t} f(\tau) \, d\tau \right)
+		\label{eq:demod-fm}
+	\end{equation}
+	
+	En \ref{eq:demod-fm} se muestra la expresión que se obtiene al derivar la expresión generar de una señal FM, obteniendo la señal de información como parte de la amplitud de la señal FM resultante, lo cual facilita la recuperación de la señal de información al aplicar un detector de envolvente a la señal derivada mediante el empleo de un circuito derivador $ s = jw $.
+	
+	\subsection{Demodulación FM en MATLAB}
+	Una forma de poder representar este comportamiento de forma digital mediante el empleo de MATLAB es mediante el uso de la transformada de Hilbert que actúa a modo de detector de envolvente luego de aplicar la derivada a la señal FM modulada previamente.
+	
+	En el bloque de código \ref{lst:demod-fm} se muestra el código definido para este propósito la cual a su vez depende de la etapa previa moduladora.
+	
+	\begin{lstlisting}[numbers=none, caption="Demodulación FM", label=lst:demod-fm]
+		%% Demodulacion FM
+		ftq = hilbert(fi).*exp(-j*2*pi*fc*t); % Senal en cuadratura
+		% diff es para realizar una derivada
+		% unwrap es para evitar los saltos
+		
+		dftq = [ftq(1) (1/(2*pi))*diff(unwrap(angle(ftq)))*Fs];
+	\end{lstlisting}
+	
+	Finalmente luego se procede a graficar ambos procedimientos realizados para realizar la comparación entre las señales, mostrada en la figura \ref{fig:mod-demod-fm-audio} en la cual se muestra la modulación y demodulacion de un tono con la finalidad de poder comprobar el procedimiento realizado, obteniendo para la señal demodulada una aproximación muy cercana a la señal de información.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/mod-demod-fm-audio}
+		\caption{Señal Modulada y Demodulada - FM}
+		\label{fig:mod-demod-fm-audio}
+	\end{figure}
+	
+	En el bloque de código \ref{lst:modulacion-fm} tan solo es necesario definir los datos de la señal de voz en lugar del tono para realizar el proceso de modulación y su inverso para un archivo .wav.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/mod-dmod-audio}
+		\caption{Modulación y Demodulación FM - Señal de Audio}
+		\label{fig:mod-dmod-audio}
+	\end{figure}
+	
+	Finalmente al realizar este cambio para la señal de voz grabada se muestra en la figura \ref{fig:mod-dmod-audio} en la cual se puede apreciar cierta fidelidad entre las señales en banda base y la señal modulada respectivamente.
 	
 	\bibliographystyle{IEEEtran}
 	\bibliography{biblio}
