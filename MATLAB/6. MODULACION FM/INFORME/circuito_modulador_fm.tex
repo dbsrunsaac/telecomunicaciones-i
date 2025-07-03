@@ -128,10 +128,15 @@
 	
 	Sin embargo si se desea tener un mayor control de la frecuencia de la señal generada el diagrama general del CI en la figura \ref{fig:diagrama-bloques-xr2206} muestra la configuración de pines, siendo los de relevancia los pines 5 y 6 (conexión para el capacitor) y 7 y 8 (pines para la resistencia) los cuales definen la frecuencia de oscilación del circuito bajo la ecuación que se define en \ref{eq:frecuencia-oscilacion} y utilizando el resto de pines para la polarización y salidas.
 	
+	Otra configuración a tener en cuenta corresponde a la amplitud de la portadora, la cual se puede configurar según la hoja de datos mediante la conexión entre los pines 13 y 14 para una señal senoidal y como un circuito abierto para el empleo de una señal triangulo, esta configuración a mayor detalle se aprecia en la figura \ref{fig:integrado-xr2206}, siendo necesario para modificar el valor de la resistencia entre ambos pines para modificar la amplitud la cual tiene una correspondencia proporcional entre el voltaje de salida respecto a la amplitud, donde se puede apreciar que se tendrá una salida de $a = \frac{60mV}{K\Omega}$, donde \textbf{a} representa la amplitud de la señal generada por el CI.
+	
 	\begin{equation}
 		\omega_o = \frac{1}{CR}
 		\label{eq:frecuencia-oscilacion}
 	\end{equation}
+	
+	
+	Una vez definidos los parámetros para el funcionamiento del CI, es posible tener un ejemplo sobre el funcionamiento del mismo mediante NI Multisim y en el cual este circuito se configurara de forma que sirva como un modulador FM mediante el empleo de una señal moduladora originada por el generador de funciones.
 	
 	\begin{figure}[h]
 		\centering
@@ -140,7 +145,10 @@
 		\label{fig:diagrama-bloques-xr2206}
 	\end{figure}
 	
-	Una vez definida los parámetros para el funcionamiento del CI, es posible tener un ejemplo sobre el funcionamiento del mismo mediante NI Multisim y en el cual este circuito se configurara de forma que sirva como un modulador FM y mediante el empleo de una señal moduladora generada por el generador de funciones.
+	Un ejemplo de esta implementación se puede apreciar en la figura \ref{fig:simulacion-xr2206} en la cual se muestran los componentes antes mencionados para una frecuencia de la portadora de 1K Hz la cual responde a la inversa del producto de la capacitancia y resistencia según \ref{eq:frecuencia-oscilacion}.
+	
+	Mientras que el tono de información se configuro con una frecuencia de 100 Hz con un amplitud $V_{pp} = 20V$, la cual se acoplo al circuito integrado mediante un divisor de tensión al pin 7.
+	
 	
 	\begin{figure}[h]
 		\centering
@@ -149,32 +157,27 @@
 		\label{fig:simulacion-xr2206}
 	\end{figure}
 	
-	Un ejemplo de esta implementación se puede apreciar en la figura \ref{fig:simulacion-xr2206} en la cual se puede apreciar los componentes antes mencionados para una frecuencia de la portadora de 1K Hz el cual responde a la inversa del producto de la capacitancia y resistencia según \ref{eq:frecuencia-oscilacion}.
+	Finalmente para la visualización de las señales se hizo uso de un osciloscopio de 2 entradas y en la cual se aprecia en su primer terminal la señal de información y en el segundo la señal FM generada a partir del CI XR2206 y mediante la cual se pudo apreciar las variaciones de frecuencia.
 	
+	\section{Señal FM generada}
 	
+	Mediante el empleo del osciloscopio se puede apreciar la forma de onda de salida del circuito integrado la cual al compararla con la señal sinuidal de entrada se puede apreciar los cambios de frecuencia para la excursión positiva de la señal como se muestra en la figura \ref{fig:mod-fm-circuito}.
 	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/mod-fm-circuito}
+		\caption{Modulación FM - Circuito Integrado XR2206}
+		\label{fig:mod-fm-circuito}
+	\end{figure}
 	
+	Por otro lado si se considera una mayor frecuencia (400 [Hz]) en la moduladora, la señal de salida presenta cambios menos significativos en la señal, ello debido a que las variaciones de frecuencia son muy próximas a la frecuencia de la portadora, este efecto puede limitar la modulación debido a que se tendría una mezcla de señales muy parecida, este efecto se muestra en la figura \ref{fig:mod-fm-circuito-400}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\textwidth]{media/mod-fm-circuito-400}
+		\caption{Modulación FM de un tono - Circuito Integrado XR2206}
+		\label{fig:mod-fm-circuito-400}
+	\end{figure}
 	
 	
 	\bibliographystyle{IEEEtran}
