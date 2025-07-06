@@ -80,7 +80,7 @@
 \usepackage{amsmath}
 \begin{document}
 	
-	\title{Modulación FM - Análisis de una señal de voz}
+	\title{Modulación Angular - PM y FM}
 	\author{
 		\makebox[\textwidth][c]{\large\textbf{Universidad Nacional de San Antonio Abad del Cusco}}\\
 		\makebox[\textwidth][c]{\normalsize\textit{Escuela profesional de Ingeniería Electrónica}}\\
@@ -114,7 +114,20 @@
 	
 	%% Contenido del documento
 	\section{Introducción}
-	La modulación en frecuencia (FM) y la modulación en fase (PM) son dos tipos de modulación angular, es decir, técnicas en las que la información se transmite modificando el ángulo de la señal portadora sinuidal. 
+	
+	Una técnica adicional a la modulación de amplitud en la cual la señal de información modifica proporcionalmente este parámetro es la modulación angular la cual consiste en modificar el angulo en relación directa a la moduladora.
+	
+	A este tipo de procedimiento de forma matemática se puede describir de forma general en \ref{eq:mod-angular-general}
+	
+	\begin{equation}
+		\Phi(t) = Acos\theta (t)
+		\label{eq:mod-angular-general}
+	\end{equation}
+	
+	Y en la cual el angulo $\theta(t)$ ahora es variable manteniendo constante la amplitud de la señal (reduciendo el ruido durante la transmisión de la señal).
+	
+	Finalmente en este tipo de modulación el angulo además se puede describir como se muestre más adelante en \ref{eq:mod-pm} y \ref{eq:mod-fm}.
+	
 	
 	\section{ Modulación PM}
 	
@@ -124,7 +137,10 @@
 	
 	\begin{equation}
 		\theta(t) = \omega_c t + k_p f(t) + \theta_0
+		\label{eq:mod-pm}
 	\end{equation}
+	
+	
 	
 	\section{ Modulación FM}
 	
@@ -134,21 +150,106 @@
 	
 	\begin{equation}
 		\theta(t) = \omega_c t + \int_0^t k_f f(\tau)\, d\tau + \theta_0\,.
+		\label{eq:mod-fm}
 	\end{equation}
+	
 	
 	
 	\section{Relación entre ambos tipos de modulación}
 	
 	Una clara relación entre este tipo de modulaciones se puede apreciar en la figura \ref{fig:relacionpmfm} en la cual se puede apreciar que la señal triangular modulada en PM guarda cierta relación con la señal cuadrada modulada en FM debido a que una modulación FM integra la señal de información para su proceso.
-
+	
+	De este análisis se puede destacar que una señal FM aunque más común resulta un proceso más caro debido a que requiere una mayor cantidad de componentes para su implementación, sin embargo sus beneficios como su alta inmunidad al ruido la convirtieron en un método ideal para la transmisión de radio.
+	
+	Y el código asociado para realizar las comparaciones se puede apreciar en el bloque de código \ref{lst:mod-pm-fm}
+	
+	\begin{lstlisting}[numbers=none, caption="Generación de una señal PM y FM", label=lst:mod-pm-fm]
+		clc, clear, close all;
+		
+		%% GENERACION DE LAS SENALES
+		clc; clear; close all;
+		
+		f = 15;             
+		T = 1/f;           
+		Fs = 1000;    
+		Ts = 1/Fs;
+		t = 0: Ts : 10*T;
+		
+		% SENAL CUADRADA
+		ft1 = square(2*pi*f*t);
+		
+		% SENAL TRIANGULAR
+		ft2 = sawtooth(2*pi*f*t, 0.5);  % Ciclo de subida y bajada simetrico
+		
+		
+		%% MODULACION PM Y FM
+		
+		% PORTADORA
+		A = 1;
+		fc = 100;
+		kp = 15;
+		
+		% SENAL PM
+		fi1 = A*sin( 2*pi*fc*t + kp*ft1);
+		fi2 = A*sin( 2*pi*fc*t + kp*ft2);
+		
+		% SENAL FM
+		fi3 = A*sin( 2*pi*fc*t + cumsum(ft1));
+		fi4 = A*sin( 2*pi*fc*t + cumsum(ft2));
+		
+		%% GRAFICAS Y RESULTADOS
+		figure;
+		
+		subplot(2,2,1);
+		plot(t, ft1, 'b', 'LineWidth', 1.5);
+		hold on
+		plot(t, fi1);
+		title('Senal Cuadrada');
+		xlabel('Tiempo [s]');
+		ylabel('Amplitud');
+		ylim([-2 2]);
+		grid on;
+		hold off;
+		
+		subplot(2,2,2);
+		plot(t, ft2, 'r', 'LineWidth', 1.5);
+		hold on
+		plot(t, fi2);
+		title('Senal Triangular');
+		xlabel('Tiempo [s]');
+		ylabel('Amplitud');
+		ylim([-2 2]);
+		grid on;
+		hold off;
+		
+		subplot(2, 2, 3);
+		plot(t, ft1);
+		hold on
+		plot(t, fi3);
+		title('Senal Cuadrada');
+		xlabel('Tiempo [s]');
+		ylabel('Amplitud');
+		ylim([-2 2]);
+		grid on;
+		hold off;
+		
+		subplot(2, 2, 4);
+		plot(t, ft2);
+		hold on
+		plot(t, fi4);
+		title('Senal Triangular');
+		xlabel('Tiempo [s]');
+		ylabel('Amplitud');
+		ylim([-2 2]);
+		grid on;
+		hold off;
+	\end{lstlisting}
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.5\textwidth]{media/relacion_pm_fm}
 		\caption{Diferencias y relaciones entre la modulación FM y PM}
 		\label{fig:relacionpmfm}
 	\end{figure}
-	
-	De este análisis se puede destacar que una señal FM aunque más común resulta un proceso más caro debido a que requiere una mayor cantidad de componentes para su implementación, sin embargo sus beneficios como su alta inmunidad al ruido la convirtieron en un método ideal para la transmisión de radio.
 	
 	\bibliographystyle{IEEEtran}
 	\bibliography{biblio}
