@@ -3,11 +3,11 @@ clc, clear, close all;
 %% GENERACION DE LAS SEÑALES
 clc; clear; close all;
 
-f = 0.25;               % Frecuencia de la señal (Hz)
+f = 5;               % Frecuencia de la señal (Hz)
 T = 1/f;             % Periodo
 Fs = 1000;           % Frecuencia de muestreo
 Ts = 1/Fs;
-t = 0: Ts : 10*T;      % Vector de tiempo para dos periodos
+t = 0: Ts : 2*T;      % Vector de tiempo para dos periodos
 
 
 % SENAL CUADRADA
@@ -45,7 +45,7 @@ title("Señal Triangular");
 figure;
 subplot(2,2,1);
 plot(t, fi1);
-title('Señal Cuadrada');
+title('Señal Cuadrada - PM');
 xlabel('Tiempo [s]');
 ylabel('Amplitud');
 ylim([-2 2]);
@@ -54,7 +54,7 @@ hold off;
 
 subplot(2,2,2);
 plot(t, fi2);
-title('Señal Triangular');
+title('Señal Triangular - PM');
 xlabel('Tiempo [s]');
 ylabel('Amplitud');
 ylim([-2 2]);
@@ -63,7 +63,7 @@ hold off;
 
 subplot(2, 2, 3);
 plot(t, fi3);
-title('Señal Cuadrada');
+title('Señal Cuadrada - FM');
 xlabel('Tiempo [s]');
 ylabel('Amplitud');
 ylim([-2 2]);
@@ -72,7 +72,7 @@ hold off;
 
 subplot(2, 2, 4);
 plot(t, fi4);
-title('Señal Triangular');
+title('Señal Triangular - FM');
 xlabel('Tiempo [s]');
 ylabel('Amplitud');
 ylim([-2 2]);

@@ -80,7 +80,7 @@
 \usepackage{amsmath}
 \begin{document}
 	
-	\title{Modulación Angular - PM y FM}
+	\title{Modulación Angular - PM, FM}
 	\author{
 		\makebox[\textwidth][c]{\large\textbf{Universidad Nacional de San Antonio Abad del Cusco}}\\
 		\makebox[\textwidth][c]{\normalsize\textit{Escuela profesional de Ingeniería Electrónica}}\\
@@ -113,7 +113,7 @@
 	\end{IEEEkeywords}
 	
 	%% Contenido del documento
-	\section{Introducción}
+	\section{Modulación PM y FM}
 	
 	Una técnica adicional a la modulación de amplitud en la cual la señal de información modifica proporcionalmente este parámetro es la modulación angular la cual consiste en modificar el angulo en relación directa a la moduladora.
 	
@@ -126,34 +126,77 @@
 	
 	Y en la cual el angulo $\theta(t)$ ahora es variable manteniendo constante la amplitud de la señal (reduciendo el ruido durante la transmisión de la señal).
 	
-	Finalmente en este tipo de modulación el angulo además se puede describir como se muestre más adelante en \ref{eq:mod-pm} y \ref{eq:mod-fm}.
+	Finalmente en este tipo de modulación el angulo además se puede describir como en \ref{eq:mod-general-pm} y \ref{eq:mod-general-fm} para una señal PM y FM respectivamente.
 	
+	\begin{equation}
+		\theta(t) = \omega_ct + k_pf(t) + \gamma_0
+		\label{eq:mod-general-pm}
+	\end{equation}
+	
+	\begin{equation}
+		\theta(t) = \omega_ct + \int_0^t{k_pf(\tau) d\tau} + \gamma_0
+		\label{eq:mod-general-fm}
+	\end{equation}
+	
+	Para ejemplificar estos 2 conceptos, se hará uso de la señales de información mostradas en las figuras \ref{fig:moduladora-cuadrada} y \ref{fig:moduladora-triangularpng} para ambos tipos de modulación.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.35\textwidth]{media/moduladora-cuadrada}
+		\caption{Señal cuadrada - Moduladora PM, FM}
+		\label{fig:moduladora-cuadrada}
+	\end{figure}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.35\textwidth]{media/moduladora-triangularpng}
+		\caption{Señal triangular - Moduladora PM, FM}
+		\label{fig:moduladora-triangularpng}
+	\end{figure}
+	
+	Y en donde la señal triangular mostrada en la figura \ref{fig:moduladora-triangularpng} es la integral de la señal cuadrada mostrada en \ref{fig:moduladora-cuadrada}, definiendose ambas relaciones para medir posteriormente realizar una comparación entre ambos tipos de modulación.
 	
 	\section{ Modulación PM}
 	
-	La modulación en fase (PM) consiste en hacer que la fase instantánea de la portadora varíe proporcionalmente a la señal moduladora. A diferencia de la FM, en la PM es la fase la que se altera directamente, mientras que la frecuencia instantánea varía solo si la señal moduladora cambia con el tiempo (es decir, si tiene una pendiente). Esto significa que, si la señal moduladora es constante, la frecuencia de la portadora también será constante, pero su fase habrá cambiado. PM se usa en sistemas digitales como la modulación por desplazamiento de fase (PSK), y tiene la ventaja de una mejor eficiencia espectral en ciertos casos, aunque puede ser más sensible a errores de sincronización en la fase.
+	Una característica fundamental de la modulación en fase (PM) consiste en relacionar la fase de la portadora de forma lineal con la señal de información, sin embargo este proceso aunque intuitivo, no difiere mucho de una modulación FM, debido a que como se muestra en \ref{eq:mod-fm} la única diferencia es la integral en la expresión para la moduladora.
 	
-	Matemáticamente como se define en \cite{stremler2006} una modulación PM guarda la siguiente relación:
+	Obviando principalmente esta expresión, matemáticamente esta se define como \ref{eq:mod-pm} según se indica en \cite{stremler2006}
 	
 	\begin{equation}
-		\theta(t) = \omega_c t + k_p f(t) + \theta_0
+		\phi_{PM} = Asin( \omega_c t + k_p f(t) + \gamma_0 )
 		\label{eq:mod-pm}
 	\end{equation}
 	
+	Definiendo normalmente $\theta_0$ o fase inicial igual a cero, eliminando este termino de la expresión general.
 	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/modulacion-pm}
+		\caption{Modulación PM}
+		\label{fig:modulacion-pm}
+	\end{figure}
+	
+	Finalmente este proceso emulado en el software MATLAB obtiene la siguiente respuesta mostrada en la figura \ref{fig:modulacion-pm} en la cual se puede apreciar un cambio significativo de fase para la integral de la señal de información o cuando este procedimiento se aplica en la señal triangular.
 	
 	\section{ Modulación FM}
 	
-	En la modulación en frecuencia, la variación de la señal moduladora (información) afecta directamente la frecuencia instantánea de la portadora. Es decir, cuando el valor de la señal moduladora aumenta, también lo hace la frecuencia de la portadora, y cuando disminuye, la frecuencia baja. Esto produce una señal cuya frecuencia varía en el tiempo de acuerdo al mensaje, pero su fase no cambia abruptamente. FM es ampliamente usada en la transmisión de radio debido a su buena resistencia al ruido.
-	
-	Y de igual forma como se define en \cite{stremler2006} una señal FM guarda la siguiente relación matemática.
-	
+	En la modulación en frecuencia, la variación de la señal moduladora (información) guarda una relación directa con la frecuencia instantánea, resultando este procedimiento en un variación de frecuencia que depende de la integral de la señal de información, permitiendo variaciones de frecuencia sin alterar significativamente la fase en la portadora, la definición matemática de una señal FM se define en \ref{eq:mod-fm} según la relación citada \cite{stremler2006}.
+		
 	\begin{equation}
-		\theta(t) = \omega_c t + \int_0^t k_f f(\tau)\, d\tau + \theta_0\,.
+		\phi_{FM}(t) = Asin( \omega_c t + \int_0^t k_f f(\tau)\, d\tau + \theta_0\ )
 		\label{eq:mod-fm}
 	\end{equation}
 	
+	Finalmente para resultados simulados de este procedimiento se muestran en la figura \ref{fig:modulacion-fm-sim}
 	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{media/modulacion-fm-sim}
+		\caption{Modulación FM}
+		\label{fig:modulacion-fm-sim}
+	\end{figure}
+	
+	Y en la cual se puede destacar que la modulación FM de la señal cuadrada se asemeja a la modulación PM de la señal triangular, lo cual se detallará en la siguiente sección.
 	
 	\section{Relación entre ambos tipos de modulación}
 	
@@ -163,23 +206,26 @@
 	
 	Y el código asociado para realizar las comparaciones se puede apreciar en el bloque de código \ref{lst:mod-pm-fm}
 	
+	\section{Código en MATLAB}
+	
 	\begin{lstlisting}[numbers=none, caption="Generación de una señal PM y FM", label=lst:mod-pm-fm]
 		clc, clear, close all;
 		
 		%% GENERACION DE LAS SENALES
 		clc; clear; close all;
 		
-		f = 15;             
-		T = 1/f;           
-		Fs = 1000;    
+		f = 5;               % Frecuencia de la senal (Hz)
+		T = 1/f;             % Periodo
+		Fs = 1000;           % Frecuencia de muestreo
 		Ts = 1/Fs;
-		t = 0: Ts : 10*T;
+		t = 0: Ts : 2*T;      % Vector de tiempo para dos periodos
+		
 		
 		% SENAL CUADRADA
 		ft1 = square(2*pi*f*t);
 		
 		% SENAL TRIANGULAR
-		ft2 = sawtooth(2*pi*f*t, 0.5);  % Ciclo de subida y bajada simetrico
+		ft2 = 1 + sawtooth(2*pi*f*t, 0.5);  % Ciclo de subida y bajada simetrico
 		
 		
 		%% MODULACION PM Y FM
@@ -199,12 +245,18 @@
 		
 		%% GRAFICAS Y RESULTADOS
 		figure;
+		subplot(1, 2, 1);
+		plot(t, ft1);
+		title("Senal Cuadrada");
 		
+		subplot(1, 2, 2);
+		plot(t, ft2);
+		title("Senal Triangular");
+		
+		figure;
 		subplot(2,2,1);
-		plot(t, ft1, 'b', 'LineWidth', 1.5);
-		hold on
 		plot(t, fi1);
-		title('Senal Cuadrada');
+		title('Senal Cuadrada - PM');
 		xlabel('Tiempo [s]');
 		ylabel('Amplitud');
 		ylim([-2 2]);
@@ -212,10 +264,8 @@
 		hold off;
 		
 		subplot(2,2,2);
-		plot(t, ft2, 'r', 'LineWidth', 1.5);
-		hold on
 		plot(t, fi2);
-		title('Senal Triangular');
+		title('Senal Triangular - PM');
 		xlabel('Tiempo [s]');
 		ylabel('Amplitud');
 		ylim([-2 2]);
@@ -223,10 +273,8 @@
 		hold off;
 		
 		subplot(2, 2, 3);
-		plot(t, ft1);
-		hold on
 		plot(t, fi3);
-		title('Senal Cuadrada');
+		title('Senal Cuadrada - FM');
 		xlabel('Tiempo [s]');
 		ylabel('Amplitud');
 		ylim([-2 2]);
@@ -234,22 +282,14 @@
 		hold off;
 		
 		subplot(2, 2, 4);
-		plot(t, ft2);
-		hold on
 		plot(t, fi4);
-		title('Senal Triangular');
+		title('Senal Triangular - FM');
 		xlabel('Tiempo [s]');
 		ylabel('Amplitud');
 		ylim([-2 2]);
 		grid on;
 		hold off;
 	\end{lstlisting}
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=0.5\textwidth]{media/relacion_pm_fm}
-		\caption{Diferencias y relaciones entre la modulación FM y PM}
-		\label{fig:relacionpmfm}
-	\end{figure}
 	
 	\bibliographystyle{IEEEtran}
 	\bibliography{biblio}

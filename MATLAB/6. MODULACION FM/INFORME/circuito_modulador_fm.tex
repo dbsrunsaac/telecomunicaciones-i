@@ -80,7 +80,7 @@
 \usepackage{amsmath}
 \begin{document}
 	
-	\title{Modulación FM - Análisis de una señal de voz}
+	\title{Modulación FM - Circuito Modulador FM}
 	\author{
 		\makebox[\textwidth][c]{\large\textbf{Universidad Nacional de San Antonio Abad del Cusco}}\\
 		\makebox[\textwidth][c]{\normalsize\textit{Escuela profesional de Ingeniería Electrónica}}\\
@@ -161,7 +161,7 @@
 	
 	\section{Señal FM generada}
 	
-	Mediante el empleo del osciloscopio se puede apreciar la forma de onda de salida del circuito integrado la cual al compararla con la señal sinuidal de entrada se puede apreciar los cambios de frecuencia para la excursión positiva de la señal como se muestra en la figura \ref{fig:mod-fm-circuito}.
+	Mediante el empleo del osciloscopio se puede apreciar la forma de onda de salida del circuito integrado la cual al compararla con la señal sinusoidal de entrada se puede apreciar los cambios de frecuencia para la excursión positiva de la señal como se muestra en la figura \ref{fig:mod-fm-circuito}.
 	
 	\begin{figure}[h]
 		\centering
@@ -179,6 +179,14 @@
 		\label{fig:mod-fm-circuito-400}
 	\end{figure}
 	
+	El comportamiento previamente explicado se puede justificar mediante la expresión general de una señal FM definida en \ref{eq:mod-fm}, la cual se menciona en \cite{stremler2006}
+	
+	\begin{equation}
+		\phi_{FM}(t) = Asin( \omega_c t + \int_0^t k_f f(\tau)\, d\tau + \theta_0\ )
+		\label{eq:mod-fm}
+	\end{equation}
+	
+	Y mediante la cual se aprecia que si la señal de la moduladora es próxima a la frecuencia de la señal portadora, estas se aproximan entre si generando pequeños cambios que dependerán completamente del indice de modulación.
 	
 	\bibliographystyle{IEEEtran}
 	\bibliography{biblio}
