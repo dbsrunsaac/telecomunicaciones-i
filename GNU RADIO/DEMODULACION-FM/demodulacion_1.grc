@@ -51,7 +51,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [808, 12.0]
+    coordinate: [920, 12.0]
     rotation: 0
     state: enabled
 - name: central_freq
@@ -72,7 +72,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [656, 12.0]
+    coordinate: [744, 12.0]
     rotation: 0
     state: enabled
 - name: channel_freq
@@ -84,7 +84,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [416, 12.0]
+    coordinate: [456, 8.0]
     rotation: 0
     state: enabled
 - name: channel_width
@@ -96,7 +96,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [528, 12.0]
+    coordinate: [600, 8.0]
     rotation: 0
     state: enabled
 - name: freq_central
@@ -108,19 +108,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 12.0]
+    coordinate: [328, 8.0]
     rotation: 0
     state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '200000'
+    value: '2000000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 12]
+    coordinate: [216, 8.0]
     rotation: 0
     state: enabled
 - name: analog_wfm_rcv_0
@@ -137,7 +137,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 460.0]
+    coordinate: [1008, 160.0]
     rotation: 0
     state: enabled
 - name: audio_sink_0
@@ -154,7 +154,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1016, 556.0]
+    coordinate: [1280, 288.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_0
@@ -172,7 +172,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1008, 476.0]
+    coordinate: [1280, 168.0]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -196,7 +196,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 348.0]
+    coordinate: [520, 408.0]
     rotation: 0
     state: enabled
 - name: qtgui_freq_sink_x_0
@@ -277,7 +277,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 236.0]
+    coordinate: [528, 164.0]
     rotation: 0
     state: enabled
 - name: rational_resampler_xxx_0
@@ -288,7 +288,7 @@ blocks:
     comment: ''
     decim: '5'
     fbw: '0'
-    interp: '12'
+    interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
     taps: '[]'
@@ -297,7 +297,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [800, 316.0]
+    coordinate: [760, 300.0]
     rotation: 0
     state: enabled
 - name: rtlsdr_source_0
@@ -654,7 +654,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 172.0]
+    coordinate: [112, 180.0]
     rotation: 0
     state: enabled
 
@@ -668,4 +668,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.10.0
+  grc_version: 3.10.9.2

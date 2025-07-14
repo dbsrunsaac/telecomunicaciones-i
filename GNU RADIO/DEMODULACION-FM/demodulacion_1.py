@@ -7,7 +7,7 @@
 # GNU Radio Python Flow Graph
 # Title: Not titled yet
 # Author: Bremdow
-# GNU Radio version: 3.10.10.0
+# GNU Radio version: 3.10.9.2
 
 from PyQt5 import Qt
 from gnuradio import qtgui
@@ -66,18 +66,18 @@ class demodulacion_1(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 200000
+        self.samp_rate = samp_rate = 2000000
         self.freq_central = freq_central = 96500000
         self.channel_width = channel_width = 200000
         self.channel_freq = channel_freq = 96500000
-        self.central_freq = central_freq = 96.5e6
+        self.central_freq = central_freq = 102.1e6
         self.audio_gain = audio_gain = 2
 
         ##################################################
         # Blocks
         ##################################################
 
-        self._central_freq_range = qtgui.Range(88e6, 108e6, 1, 96.5e6, 200)
+        self._central_freq_range = qtgui.Range(88e6, 108e6, 100e3, 102.1e6, 200)
         self._central_freq_win = qtgui.RangeWidget(self._central_freq_range, self.set_central_freq, "'central_freq'", "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_layout.addWidget(self._central_freq_win)
         self._audio_gain_range = qtgui.Range(1, 10, 1, 2, 200)
@@ -98,8 +98,13 @@ class demodulacion_1(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_bb_gain(20, 0)
         self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(0, 0)
+        self.rational_resampler_xxx_0_0 = filter.rational_resampler_fff(
+                interpolation=48,
+                decimation=400,
+                taps=[],
+                fractional_bw=0)
         self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
-                interpolation=12,
+                interpolation=1,
                 decimation=5,
                 taps=[],
                 fractional_bw=0)
@@ -107,7 +112,7 @@ class demodulacion_1(gr.top_block, Qt.QWidget):
             1024, #size
             window.WIN_BLACKMAN_hARRIS, #wintype
             central_freq, #fc
-            3500000, #bw
+            5e6, #bw
             "", #name
             1,
             None # parent
@@ -146,31 +151,32 @@ class demodulacion_1(gr.top_block, Qt.QWidget):
         self._qtgui_freq_sink_x_0_win = sip.wrapinstance(self.qtgui_freq_sink_x_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_freq_sink_x_0_win)
         self.low_pass_filter_0 = filter.fir_filter_ccf(
-            25,
+            1,
             firdes.low_pass(
                 1,
                 samp_rate,
                 75e3,
-                25e3,
+                250e3,
                 window.WIN_HAMMING,
                 6.76))
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_ff(audio_gain)
         self.audio_sink_0 = audio.sink(48000, '', True)
         self.analog_wfm_rcv_0 = analog.wfm_rcv(
-        	quad_rate=480e3,
-        	audio_decimation=10,
+        	quad_rate=400e3,
+        	audio_decimation=1,
         )
 
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_wfm_rcv_0, 0), (self.blocks_multiply_const_vxx_0, 0))
+        self.connect((self.analog_wfm_rcv_0, 0), (self.rational_resampler_xxx_0_0, 0))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.audio_sink_0, 0))
-        self.connect((self.low_pass_filter_0, 0), (self.rational_resampler_xxx_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.analog_wfm_rcv_0, 0))
-        self.connect((self.rtlsdr_source_0, 0), (self.low_pass_filter_0, 0))
+        self.connect((self.low_pass_filter_0, 0), (self.analog_wfm_rcv_0, 0))
+        self.connect((self.rational_resampler_xxx_0, 0), (self.low_pass_filter_0, 0))
+        self.connect((self.rational_resampler_xxx_0_0, 0), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.qtgui_freq_sink_x_0, 0))
+        self.connect((self.rtlsdr_source_0, 0), (self.rational_resampler_xxx_0, 0))
 
 
     def closeEvent(self, event):
@@ -186,7 +192,7 @@ class demodulacion_1(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.low_pass_filter_0.set_taps(firdes.low_pass(1, self.samp_rate, 75e3, 25e3, window.WIN_HAMMING, 6.76))
+        self.low_pass_filter_0.set_taps(firdes.low_pass(1, self.samp_rate, 75e3, 250e3, window.WIN_HAMMING, 6.76))
         self.rtlsdr_source_0.set_sample_rate(self.samp_rate)
 
     def get_freq_central(self):
@@ -212,7 +218,7 @@ class demodulacion_1(gr.top_block, Qt.QWidget):
 
     def set_central_freq(self, central_freq):
         self.central_freq = central_freq
-        self.qtgui_freq_sink_x_0.set_frequency_range(self.central_freq, 3500000)
+        self.qtgui_freq_sink_x_0.set_frequency_range(self.central_freq, 5e6)
         self.rtlsdr_source_0.set_center_freq(self.central_freq, 0)
 
     def get_audio_gain(self):
