@@ -33,11 +33,32 @@ options:
     state: enabled
 
 blocks:
+- name: freq_trans
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: 85e6
+    step: 100e3
+    stop: 86e7
+    value: 86e6
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1976, 28.0]
+    rotation: 0
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '96000'
+    value: '48000'
   states:
     bus_sink: false
     bus_source: false
@@ -112,7 +133,7 @@ blocks:
     maximum: '0.1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_second: samp_rate*10
+    samples_per_second: 480e3
     type: complex
     vlen: '1'
   states:
@@ -122,7 +143,7 @@ blocks:
     coordinate: [1808, 568.0]
     rotation: 0
     state: enabled
-- name: blocks_throttle2_0_0
+- name: blocks_throttle2_1
   id: blocks_throttle2
   parameters:
     affinity: ''
@@ -140,7 +161,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1304, 416.0]
+    coordinate: [1328, 416.0]
     rotation: 0
     state: enabled
 - name: blocks_wavfile_source_0
@@ -645,7 +666,7 @@ blocks:
     bw7: '0'
     bw8: '0'
     bw9: '0'
-    center_freq0: 86e6
+    center_freq0: freq_trans
     center_freq1: '0'
     center_freq10: '0'
     center_freq11: '0'
@@ -861,9 +882,9 @@ connections:
 - [blocks_throttle2_0, '0', qtgui_freq_sink_x_0_0, '0']
 - [blocks_throttle2_0, '0', qtgui_time_sink_x_0_0, '0']
 - [blocks_throttle2_0, '0', uhd_usrp_sink_0, '0']
-- [blocks_throttle2_0_0, '0', analog_nbfm_tx_0, '0']
+- [blocks_throttle2_1, '0', analog_nbfm_tx_0, '0']
 - [blocks_wavfile_source_0, '0', analog_fm_preemph_0, '0']
-- [low_pass_filter_0, '0', blocks_throttle2_0_0, '0']
+- [low_pass_filter_0, '0', blocks_throttle2_1, '0']
 - [low_pass_filter_0, '0', qtgui_freq_sink_x_0, '0']
 - [low_pass_filter_0, '0', qtgui_time_sink_x_0, '0']
 
