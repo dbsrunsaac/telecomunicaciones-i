@@ -20,6 +20,11 @@ clc, clear, close all;
 % plot(media);
 
 fid = fopen('data\PR.csv');
-linea = fgetl(fid);
+for i = 42 : 45
+    linea = fgetl(fid);
+end
 valores = strsplit(linea, ',');
 fclose(fid);
+
+disp(linea)
+disp(valores)
