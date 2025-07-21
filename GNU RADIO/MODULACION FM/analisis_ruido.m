@@ -12,7 +12,7 @@ distancia = [0, 10, 20, 30, 40, 50, 100, 150, 200, 250];
 
 media = [];
 i = 1;
-for k = 14: 23 
+for k = 1: 10 
     disp(archivos(k).name);
     data = readmatrix(strcat("./data/", archivos(k).name));
     freq = data(1:401, 1);

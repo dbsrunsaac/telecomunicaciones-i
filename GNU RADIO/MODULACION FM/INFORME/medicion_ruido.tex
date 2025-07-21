@@ -118,9 +118,31 @@
 	
 	
 	
+	\section{ Metodología }
+	Para poder cuantizar la influencia del generador de ruido en la demodulación FM, es de vital importancia poder modificar los parámetros de una señal FM, siendo que dentro de ello se debe considerar, el ancho de banda de la señal de información, la desviación máxima estándar y en función a ello el índice de modulación, además para poder trabajar dentro del ancho de banda de influencia del dispositivo de ruido también fue necesario controlar la frecuencia de transmisión.
+	
+	En tal sentido para este propósito se definieron 2 proyectos en el software GNU Radio que constituyen a un transmisor y demodulador FM los cuales pudieron facilitar la variación de parámetros.
+	
 	\section{ Transmisor FM }
+	
+	En la parte del transmisor FM se definió una modulación WBFM (Wide Band FM) esto con la finalidad de poder modificar el valor de $\beta$ o índice de modulación en el intervalo entre 0 y 10, en la figura \ref{fig:transmisor-fm} se muestra un esquema gráfico para este propósito en el cual para la transmisión se hace uso del bloque WBFM el cual internamente realiza el proceso de mezclado para la generación de una señal FM,, además también se hicieron uso  2
+	
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{media/transmisor-fm}
+		\caption{SDR: Transmisor FM - GNU Radio}
+		\label{fig:transmisor-fm}
+	\end{figure}
+	
+	
 	\section{ Receptor FM }
-	\section{ Mediciones y cálculos }
+	
+	\section{ Análisis de datos }
+	
+	
+	
+	
 	
 	
 	\bibliographystyle{IEEEtran}
