@@ -138,6 +138,17 @@
 	
 	\section{ Receptor FM }
 	
+	El bloque receptor FM, se considero como elemento de validación de frecuencia y potencia de la señal transmitida, este a su vez estuvo compuesto por un bloque de entrada o de recepción perteneciente al USRP 2910 / 2920, un bloque para modifica la tasa de muestreo (Rational Resampler) para luego conectar estas 2 etapas previas con el bloque de demodulación FM (WBFM Receive), finalmente debido a la alta tasa de muestreo en la recepción al momento de reproducir la señal sintonizada, fue necesario volver a modificar la tasa de muestreo para adecuarla al estándar de 48k [Hz].
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{media/receptor-fm}
+		\caption{Receptor FM - GNU Radio}
+		\label{fig:receptor-fm}
+	\end{figure}
+	
+	En la figura \ref{fig:receptor-fm} se muestra el esquema general de los bloques utilizados en GNU Radio, además se debe tener en cuenta
+	
 	\section{ Análisis de datos }
 	
 	
