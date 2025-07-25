@@ -5,6 +5,7 @@ carpeta = './data2/';
 % Obtener lista de archivos (excluye carpetas)
 archivos = dir(fullfile(carpeta, '*'));
 archivos = archivos(~[archivos.isdir]);  % Filtrar solo archivos
+
 distancias = [10, 30, 50, 100, 150, 200, 250];
 
 % Mostrar los nombres de archivo
